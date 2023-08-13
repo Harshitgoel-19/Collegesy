@@ -51,7 +51,7 @@ const Home = () => {
   const getUser = async () => {
     try {
       const res = await axios.get(
-        `https://${BASE}/api/users/checkLoggedIn`
+        `https://${BASE}/api/users/checkLoggedIn`,{ withCredentials: true }
       );
       if (res.status === 200) {
         setUser(res.data.data.user);
