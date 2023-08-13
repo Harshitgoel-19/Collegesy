@@ -19,10 +19,10 @@ const UpdateUser = () => {
 
   const getUser = async () => {
     try {
-      const res = await axios.get(`http://${BASE}/api/users/checkLoggedIn`);
+      const res = await axios.get(`${BASE}/api/users/checkLoggedIn`);
       if (res.status === 200) {
         setUser(res.data.data.user);
-        setShowPhoto(`http://${BASE}/images/users/${res.data.data.user.photo || 'xyz.png'}`);
+        setShowPhoto(`${BASE}/images/users/${res.data.data.user.photo || 'xyz.png'}`);
       }
     } catch (e) {
       console.log(e);
@@ -65,7 +65,7 @@ const sendData=(formdata)=>{
   try {
     axios
       .patch(
-        `http://${BASE}/api/users/updateMe/`,
+        `${BASE}/api/users/updateMe/`,
         formdata,
         {
           headers: {
@@ -125,7 +125,7 @@ const sendData=(formdata)=>{
                 <img
                   alt="..."
                   crossOrigin="anonymous"
-                  src={showPhoto || `http://${BASE}/images/users/xyz.png`}
+                  src={showPhoto || `${BASE}/images/users/xyz.png`}
                   //   src=
                   //   src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg"
                   className="shadow-xl rounded-full h-52 align-middle border-none"

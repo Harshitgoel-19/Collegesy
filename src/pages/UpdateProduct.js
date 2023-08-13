@@ -86,7 +86,7 @@ const UpdateProduct = () => {
     try {
       axios
         .put(
-          `http://${BASE}/api/products/updateProduct/` + product._id,
+          `${BASE}/api/products/updateProduct/` + product._id,
           formdata,
           /*title,
             description,
@@ -164,7 +164,7 @@ const UpdateProduct = () => {
                     return (
                       <div key={image}>
                         <img
-                          src={`http://${BASE}/images/products/${image}`}
+                          src={`${BASE}/images/products/${image}`}
                           alt={image}
                           height="50"
                           width="50"

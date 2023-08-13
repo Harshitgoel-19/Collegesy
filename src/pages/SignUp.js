@@ -47,7 +47,7 @@ const SignUp = () => {
     else {
       try {
         await axios
-          .post(`http://${BASE}/api/users/signup`, {
+          .post(`${BASE}/api/users/signup`, {
             email,
             username,
             password,
