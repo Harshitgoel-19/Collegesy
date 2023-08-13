@@ -42,7 +42,7 @@ const UpdatePassword = () => {
       toast.warning("Please confirm New Password");
     else {
       const res = await axios.patch(
-        `${BASE}/api/users/updatePassword`,
+        `https://${BASE}/api/users/updatePassword`,
         {
           currentPassword,
           newPassword,

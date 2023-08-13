@@ -1,3 +1,4 @@
+BASE= REACT_APP_BACK_END_ROOT
 const getLocalTime = (chat,userId,role) => {
     let msg = chat.latestMessage; 
     if (!msg) return;
@@ -29,7 +30,7 @@ const SingleChatGrid = (props) => {
         {" "}
         <img
           alt=""
-          src={`${process.env.BACK_END_ROOT}/images/users/${chat[`${role}Id`]?.photo || "xyz.png"}`}
+          src={`https://${BASE}/images/users/${chat[`${role}Id`]?.photo || "xyz.png"}`}
           width={40}
           height={40}
           className="rounded-full"

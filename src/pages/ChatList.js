@@ -16,7 +16,7 @@ const ChatList = () => {
   const loadChat = async () => {
     try {
       const res = await axios.get(
-        `${BASE}/api/chats/getChatByProductId/` + product._id
+        `https://${BASE}/api/chats/getChatByProductId/` + product._id
       );
       setChats(res.data.data.chat);
     } catch (e) {
@@ -74,7 +74,7 @@ const ChatList = () => {
                         {" "}
                         <img
                           alt=""
-                          src={`${BASE}/images/users/${chat.buyerId?.photo || 'xyz.png'}`}
+                          src={`https://${BASE}/images/users/${chat.buyerId?.photo || 'xyz.png'}`}
                           width={40}
                           height={40}
                           className="rounded-full"

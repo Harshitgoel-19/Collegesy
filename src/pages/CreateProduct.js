@@ -50,7 +50,7 @@ const CreateProduct = () => {
     else {
       try {
         axios
-          .post(`${BASE}/api/products/createProduct`, {
+          .post(`https://${BASE}/api/products/createProduct`, {
             title,
             description,
             price,

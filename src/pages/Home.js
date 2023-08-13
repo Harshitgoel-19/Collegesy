@@ -51,7 +51,7 @@ const Home = () => {
   const getUser = async () => {
     try {
       const res = await axios.get(
-        `${BASE}/api/users/checkLoggedIn`
+        `https://${BASE}/api/users/checkLoggedIn`
       );
       if (res.status === 200) {
         setUser(res.data.data.user);
@@ -67,7 +67,7 @@ const Home = () => {
   const getAllProducts = async (page = 1) => {
     try {
       setloading(true);
-      const fetchURL = `${BASE}/api/products/getAllProducts?page=${page}&limit=12&sort=${
+      const fetchURL = `https://${BASE}/api/products/getAllProducts?page=${page}&limit=12&sort=${
         sortValue ? sortValue : "-createdAt"
       }`;
       const res = await axios.get(fetchURL);
@@ -377,8 +377,8 @@ const Home = () => {
                         //  {`../../../backend/images/products/${product.images[0]}`}
                         //  src={require(`../../../backend/images/products/${product.images[0]}`)}
                         crossOrigin="anonymous"
-                        // src={"http://${BASE}/images/products/64940ab0cf981febfb877f12_0.jpg"}
-                        src={`${BASE}/images/products/${product.images[0]}`}
+                        // src={"http://https://${BASE}/images/products/64940ab0cf981febfb877f12_0.jpg"}
+                        src={`https://${BASE}/images/products/${product.images[0]}`}
                         alt=""
                       />
                       <div className="p-5">

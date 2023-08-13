@@ -36,7 +36,7 @@ const AskOTP = () => {
     else {
       try {
         const res=await axios
-          .post(`${BASE}/api/users/verifySignUpOTP`, {
+          .post(`https://${BASE}/api/users/verifySignUpOTP`, {
             email,
             otp,
           })

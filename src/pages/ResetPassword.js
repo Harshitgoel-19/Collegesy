@@ -42,7 +42,7 @@ const ResetPassword = () => {
         else if(password.length<8) toast.warning("Password is too short")
         else{
           try{
-            const res = await axios.post(`${BASE}/api/users/resetPassword`,{
+            const res = await axios.post(`https://${BASE}/api/users/resetPassword`,{
               email,
               password,
               passwordConfirm,
