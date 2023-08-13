@@ -21,7 +21,7 @@ const Navigation = (props) => {
     //let src = 'https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_700KB.mp3';
     //let src='http://commondatastorage.googleapis.com/codeskulptor-assets/jump.ogg'
     let src =
-      "http://codeskulptor-demos.commondatastorage.googleapis.com/GalaxyInvaders/alien_shoot.wav";
+      "http://commondatastorage.googleapis.com/codeskulptor-assets/week7-brrring.m4a";
     let audio = new Audio(src);
     audio.play();
     setTimeout(() => {
