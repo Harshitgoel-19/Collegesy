@@ -17,7 +17,7 @@ const AllChatList = () => {
 
   const loadChat = async () => {
     try {
-      const res = await axios.get(`${process.env.BACK_END_ROOT}/api/chats/getChats`);
+      const res = await axios.get(`${BASE}/api/chats/getChats`);
       setBuyingChats(res.data.data.buyingChats);
       setSellingChats(res.data.data.sellingChats);
     } catch (e) {
