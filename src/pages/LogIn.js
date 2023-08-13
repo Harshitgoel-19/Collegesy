@@ -47,7 +47,7 @@ const LogIn = () => {
     else{
       console.log(BASE)
       try{
-        const res= await axios.post(`http://${BASE}/api/users/login`,{
+        const res= await axios.post(`${BASE}/api/users/login`,{
           email,
           password,
           rememberMe
