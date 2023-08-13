@@ -1,4 +1,4 @@
-BASE= process.env.REACT_APP_BACK_END_ROOT
+let BASE= process.env.REACT_APP_BACK_END_ROOT
 const getLocalTime = (chat,userId,role) => {
     let msg = chat.latestMessage; 
     if (!msg) return;
