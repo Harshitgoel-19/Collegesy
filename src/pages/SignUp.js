@@ -35,7 +35,7 @@ const SignUp = () => {
     setMessage({ messaged: "" });
     const { email, username, password, passwordConfirm } = input;
     if (email === "") toast.warning("Please enter Email");
-    //else if (!email.includes("@mnnit.ac.in")) toast.warning("Please enter valid Email");
+    // else if (!email.includes("@mnnit.ac.in")) toast.warning("Please enter valid Email");
     else if (username === "") toast.warning("Please enter Username");
     else if (password === "") toast.warning("Please enter Password");
     else if (password.length < 8)

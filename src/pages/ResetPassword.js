@@ -37,7 +37,7 @@ const ResetPassword = () => {
         setMessage({messaged:""});
         const {email,password,passwordConfirm}=input
         if(email==="") toast.warning("Please enter Email")
-        else if(!email.includes("@")) toast.warning("Please enter valid Email")
+        // else if(!email.includes("@mnnit.ac.in")) toast.warning("Please enter valid Email")
         else if(password==="") toast.warning("Please enter Password")
         else if(password.length<8) toast.warning("Password is too short")
         else{

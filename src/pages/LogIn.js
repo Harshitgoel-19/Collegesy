@@ -43,6 +43,7 @@ const LogIn = () => {
     setMessage({messaged:""});
     const {email,password,rememberMe}=input
     if(email==="") toast.warning("Please enter Email")
+    // else if (!email.includes("@mnnit.ac.in")) toast.warning("Please enter valid Email");
     else if(password==="") toast.warning("Please enter Password")
     else{
       console.log(BASE)
