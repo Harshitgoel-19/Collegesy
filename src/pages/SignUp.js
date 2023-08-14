@@ -58,7 +58,7 @@ const SignUp = () => {
               toast.success("User Registered Successfully");
               setTimeout(() => {
                 navigate("/askotp");
-              }, 1000);
+              }, 500);
             }
           });
       } catch (e) {

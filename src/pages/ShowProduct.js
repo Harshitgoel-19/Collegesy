@@ -68,7 +68,7 @@ const ShowProduct = () => {
           navigate("/user",{
             state: { user: user},
           });
-        }, 2000);
+        }, 500);
         toast.success("Product Deleted");
       }
     } catch (e) {

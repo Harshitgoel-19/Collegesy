@@ -102,7 +102,7 @@ const UpdateProduct = () => {
             toast.success("Product Updated Successfully");
             setTimeout(() => {
               navigate("/");
-            }, 1000);
+            }, 500);
           }
         });
     } catch (e) {
