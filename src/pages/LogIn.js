@@ -51,7 +51,7 @@ const LogIn = () => {
           email,
           password,
           rememberMe
-        })
+        },{ withCredentials: true })
         if(res.status===200){
           toast.success("Login Successful")
           setTimeout(()=>{

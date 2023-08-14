@@ -14,7 +14,7 @@ const LogOut = () => {
   const deleteUser = () => {
     try {
       axios
-        .post(`https://${BASE}/api/users/logout`)
+        .post(`https://${BASE}/api/users/logout`,{ withCredentials: true })
         .then((res) => {
           if (res.status === 200) {
             navigate('/login')
