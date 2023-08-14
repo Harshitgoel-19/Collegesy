@@ -56,7 +56,7 @@ const LogIn = () => {
           toast.success("Login Successful")
           setTimeout(()=>{
           navigate('/')
-          },1000);     
+          },500);     
         }
       }catch(e){
         setMessage({messaged: e.response.data.message})

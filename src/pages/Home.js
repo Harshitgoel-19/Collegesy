@@ -7,7 +7,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Navigation from "../components/Navigation";
 import { Link } from "react-router-dom";
 axios.defaults.withCredentials = true;
-let BASE=process.env.REACT_APP_BACK_END_ROOT
+let BASE = process.env.REACT_APP_BACK_END_ROOT;
 
 const getAppxDate = (date) => {
   let time = Math.floor(
@@ -50,9 +50,10 @@ const Home = () => {
 
   const getUser = async () => {
     try {
-      const res = await axios.get(
-        `https://${BASE}/api/users/checkLoggedIn`,{ withCredentials: true ,credentials: 'include'}
-      );
+      const res = await axios.get(`https://${BASE}/api/users/checkLoggedIn`, {
+        withCredentials: true,
+        credentials: "include",
+      });
       if (res.status === 200) {
         setUser(res.data.data.user);
       }
@@ -221,7 +222,7 @@ const Home = () => {
                   onChange={(e) => setPrice(e.target.value)}
                   defaultValue={price}
                   step="50"
-                  className="w-40 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                  className="w-40 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-black"
                 />
                 <div className="flex justify-between">
                   <label
@@ -245,11 +246,11 @@ const Home = () => {
                   onChange={(e) => setAge(e.target.value)}
                   defaultValue={age}
                   step="1"
-                  className="w-40 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                  className="w-40 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-black"
                 />
               </div>
             </div>
-            <div className=" p-2 bg-white mb-2 flex">
+            <div className=" p-2 bg-white mb-2 flex dark:bg-gray-700">
               <button
                 type="button"
                 onClick={handleReset}
@@ -312,7 +313,7 @@ const Home = () => {
           name="sort"
           id="sort"
           defaultValue="-createdAt"
-          className="bg-white rounded-lg shadow dark:bg-gray-900 mx-2"
+          className="bg-white rounded-lg shadow dark:bg-gray-900 text-white mx-2"
           onChange={(e) => {
             sortProducts(e);
           }}
@@ -329,7 +330,7 @@ const Home = () => {
               filter ? setFilter(false) : setFilter(true);
             }}
             data-dropdown-toggle="dropdown"
-            className="text-black bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center mx-2 bg-white rounded-lg shadow dark:bg-gray-900"
+            className="text-black bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center mx-2 bg-white rounded-lg shadow dark:bg-gray-900 text-white"
             type="button"
           >
             Filter
@@ -353,56 +354,109 @@ const Home = () => {
         </div>
       </div>
       <br />
-      <div className="grid md:grid-cols-3 grid-cols-2 gap-y-10 justify-between z-0 ">
-        {products
-          ?.map((product) => {
-            if (
-              (categorylist.includes(product.category) ||
-                categorylist.length === 0) &&
-              (product.price <= price || price === 100000) &&
-              (getAge(product.age) <= age || age === 240) && ((!search)||(product.title.toLowerCase().includes(search)) || (product.description.toLowerCase().includes(search)) || (product.category.toLowerCase().includes(search)))
-            )
-              return (
-                <div key={product._id}>
-                  <Link
-                    to="./show-product"
-                    state={{
-                      data: product,
-                      user: user,
-                    }}
-                  >
-                    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 grid grid-cols-3 transition ease-in-out delay-150 hover:-translate-y-1">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-20 p-16">
+        {products?.map((product) => {
+          if (
+            (categorylist.includes(product.category) ||
+              categorylist.length === 0) &&
+            (product.price <= price || price === 100000) &&
+            (getAge(product.age) <= age || age === 240) &&
+            (!search ||
+              product.title.toLowerCase().includes(search) ||
+              product.description.toLowerCase().includes(search) ||
+              product.category.toLowerCase().includes(search))
+          )
+            return (
+              <div key={product._id} className="rounded-lg">
+                <Link
+                  to="./show-product"
+                  state={{
+                    data: product,
+                    user: user,
+                  }}
+                >
+                  <div className=" max-w-sm bg-white border border-gray-200 rounded-2xl shadow dark:bg-gray-800 dark:border-gray-700">
+                    <div className="m-auto p-auto h-72">
                       <img
-                        className="rounded-t-lg h-52 w-auto"
-                        //  {`../../../backend/images/products/${product.images[0]}`}
-                        //  src={require(`../../../backend/images/products/${product.images[0]}`)}
-                        crossOrigin="anonymous"
-                        // src={"http://https://${BASE}/images/products/64940ab0cf981febfb877f12_0.jpg"}
-                        src={`https://${BASE}/images/products/${product.images[0]}`}
-                        alt=""
+                        className="p-8 rounded-t-lg w-auto"
+                        src={`http://${BASE}/images/products/${product.images[0]}`}
+                        alt="product image"
                       />
-                      <div className="p-5">
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                          {product.title}
-                        </h5>
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                    </div>
+                    <div className="px-5 pb-5">
+                      <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                        {product.title}
+                      </h5>
+                      <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                        {`${getAppxDate(product.createdAt)}`}
+                      </p>
+                      {/* <div className="flex items-center mt-2.5 mb-5">
+                        <svg
+                          className="w-4 h-4 text-yellow-300 mr-1"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 22 20"
+                        >
+                          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+                        <svg
+                          className="w-4 h-4 text-yellow-300 mr-1"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 22 20"
+                        >
+                          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+                        <svg
+                          className="w-4 h-4 text-yellow-300 mr-1"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 22 20"
+                        >
+                          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+                        <svg
+                          className="w-4 h-4 text-yellow-300 mr-1"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 22 20"
+                        >
+                          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+                        <svg
+                          className="w-4 h-4 text-gray-200 dark:text-gray-600"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 22 20"
+                        >
+                          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                        </svg>
+                        <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
+                          5.0
+                        </span>
+                      </div> */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-3xl font-bold text-gray-900 dark:text-white">
                           ₹ {product.price}
-                        </p>
-                        {/* <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                        {`${getAge(product.age)} months old`}
-                      </p> */}
-                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                          {`${getAppxDate(product.createdAt)}`}
-                        </p>
-                        {/* <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                        {`${product.interestedViews} interested`}
-                      </p> */}
+                        </span>
+                        <a
+                          href="#"
+                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        >
+                          Add to cart
+                        </a>
                       </div>
                     </div>
-                  </Link>
-                </div>
-              );
-          })}
+                  </div>
+                </Link>
+              </div>
+            );
+        })}
       </div>
       {onLoad()};
     </>
