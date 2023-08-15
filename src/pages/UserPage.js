@@ -209,11 +209,11 @@ const UserPage = () => {
       /> */}
       <Navigation user={user} />
 
-      <section className="pt-16 bg-gray-50 z-0">
+      <section className="pt-16 bg-gray-50 z-0 h-fit">
         
         <div className="w-full top-0 lg:w-4/12 px-4 mx-auto z-0">
         {askConfirmation()}
-          <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
+          <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-8 bottom-2">
             <div className="px-6">
               <div className="flex flex-wrap justify-center">
                 <div className="w-full px-4 flex justify-center">
@@ -276,7 +276,7 @@ const UserPage = () => {
                 </div>
 
                 {/* </div> */}
-                <div className="w-full px-4 text-center mt-10">
+                <div className="w-full px-4 text-center mt-1">
                   <div className="flex justify-center py-4 lg:pt-4 pt-8">
                     <div className="mr-4 p-3 text-center">
                       <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
@@ -289,7 +289,7 @@ const UserPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="text-center mt-12">
+              <div className="text-center mt-4">
                 <h3 className="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
                   {user.username}
                 </h3>
@@ -297,7 +297,7 @@ const UserPage = () => {
                   <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400" />
                   MNNIT Allahabad, Prayagraj
                 </div>
-                <div className="mb-2 text-blueGray-600 mt-10">
+                <div className="mb-2 text-blueGray-600 mt-6">
                   <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400" />
                   {designation}
                 </div>
@@ -358,7 +358,7 @@ const UserPage = () => {
         </footer> */}
       </section>
       <section>
-        <div className="grid md:grid-cols-3 grid-cols-2 gap-y-10 justify-between ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-20 p-16">
           {products?.map((product) => (
             <div key={product._id}>
               <Link
@@ -367,7 +367,7 @@ const UserPage = () => {
                   data: product,
                   user,
                 }}
-                style={{opacity: product.active?1:0.6}}
+                style={{opacity: product.active?1:0.4}}
               >
                 <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 grid grid-cols-3">
                   <img
@@ -384,7 +384,7 @@ const UserPage = () => {
                       {product.title}
                     </h5>
                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                      {product.description}
+                      {product.description.substr(0,40)+"...."}
                     </p>
                     <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                       {product.createdAt.substr(0,10)}

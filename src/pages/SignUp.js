@@ -4,12 +4,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Navigation from "../components/Navigation";
+import ClipLoader from "react-spinners/ClipLoader";
 import "react-toastify/dist/ReactToastify.css";
 axios.defaults.withCredentials = true;
 let BASE=process.env.REACT_APP_BACK_END_ROOT
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const [loading, setloading] = useState(true);
   const location = useLocation();
   const [input, setInput] = useState({
     email: "",
@@ -35,7 +37,7 @@ const SignUp = () => {
     setMessage({ messaged: "" });
     const { email, username, password, passwordConfirm } = input;
     if (email === "") toast.warning("Please enter Email");
-    // else if (!email.includes("@mnnit.ac.in")) toast.warning("Please enter valid Email");
+    //else if (!email.includes("@mnnit.ac.in")) toast.warning("Please enter valid Email");
     else if (username === "") toast.warning("Please enter Username");
     else if (password === "") toast.warning("Please enter Password");
     else if (password.length < 8)
@@ -46,6 +48,7 @@ const SignUp = () => {
       toast.warning("Confirm Password doesn't match");
     else {
       try {
+        setloading(true)
         await axios
           .post(`https://${BASE}/api/users/signup`, {
             email,
@@ -58,16 +61,26 @@ const SignUp = () => {
               toast.success("User Registered Successfully");
               setTimeout(() => {
                 navigate("/askotp");
-              }, 500);
+              }, 1000);
             }
           });
       } catch (e) {
         // console.log(e);
+        setloading(false)
         setMessage({ messaged: e.response.data.message });
       }
     }
   };
   const print = Object.values(messaged);
+  if (loading) {
+    return (
+      <>
+        <h1>
+          ...loading <ClipLoader color="#000000" />
+        </h1>
+      </>
+    );
+  }
 
   return (
     <>

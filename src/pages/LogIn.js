@@ -14,7 +14,7 @@ const LogIn = () => {
     password:"",
     rememberMe:false
   })
-  const [loading, setloading] = useState(false);
+  const [loading, setloading] = useState(true);
   const [messaged,setMessage]=useState({messaged:""});
   const navigate = useNavigate();
 
@@ -40,26 +40,31 @@ const LogIn = () => {
   }
   const addData=async(e)=>{
     e.preventDefault();
+    // console.log("hit");
     setMessage({messaged:""});
     const {email,password,rememberMe}=input
+    // console.log(email+password+rememberMe);
     if(email==="") toast.warning("Please enter Email")
-    // else if (!email.includes("@mnnit.ac.in")) toast.warning("Please enter valid Email");
     else if(password==="") toast.warning("Please enter Password")
     else{
       console.log(BASE)
+      setloading(true);
       try{
+        // console.log("trying");
         const res= await axios.post(`https://${BASE}/api/users/login`,{
           email,
           password,
           rememberMe
         },{ withCredentials: true })
         if(res.status===200){
+          // console.log("success")
           toast.success("Login Successful")
           setTimeout(()=>{
           navigate('/')
-          },500);     
+          },1000);     
         }
       }catch(e){
+        // console.log("error");
         setMessage({messaged: e.response.data.message})
         console.log(e);
       }

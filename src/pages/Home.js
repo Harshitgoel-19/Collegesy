@@ -50,10 +50,7 @@ const Home = () => {
 
   const getUser = async () => {
     try {
-      const res = await axios.get(`https://${BASE}/api/users/checkLoggedIn`, {
-        withCredentials: true,
-        credentials: "include",
-      });
+      const res = await axios.get(`https://${BASE}/api/users/checkLoggedIn`);
       if (res.status === 200) {
         setUser(res.data.data.user);
       }
@@ -313,15 +310,17 @@ const Home = () => {
           name="sort"
           id="sort"
           defaultValue="-createdAt"
-          className="bg-white font-semibold text-black rounded-lg shadow dark:bg-gray-900 text-white mx-2"
+          className="text-black bg-white font-semibold rounded-lg shadow dark:bg-gray-900 text-white mx-2"
           onChange={(e) => {
             sortProducts(e);
           }}
         >
+          {/* <div className="text-black"> */}
           <option value="price">Price ↑</option>
           <option value="-price">Price ↓</option>
           <option value="-createdAt">Recent ↓</option>
           <option value="createdAt">Recent ↑</option>
+          {/* </div> */}
         </select>
         <div>
           <button
@@ -333,7 +332,7 @@ const Home = () => {
             className="text-black bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center mx-2 bg-white rounded-lg shadow dark:bg-gray-900 text-white"
             type="button"
           >
-            Filter
+            <h3 className="text-black dark: text-white">Filter</h3>
             <svg
               className="w-[18px] h-[18px] text-gray-800 dark:text-white ml-1 pt-1"
               aria-hidden="true"
@@ -354,43 +353,45 @@ const Home = () => {
         </div>
       </div>
       <br />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-20 p-16">
-        {products?.map((product) => {
-          if (
-            (categorylist.includes(product.category) ||
-              categorylist.length === 0) &&
-            (product.price <= price || price === 100000) &&
-            (getAge(product.age) <= age || age === 240) &&
-            (!search ||
-              product.title.toLowerCase().includes(search) ||
-              product.description.toLowerCase().includes(search) ||
-              product.category.toLowerCase().includes(search))
-          )
-            return (
-              <div key={product._id} className="rounded-lg">
-                <Link
-                  to="./show-product"
-                  state={{
-                    data: product,
-                    user: user,
-                  }}
-                >
-                  <div className=" max-w-sm bg-white border border-gray-200 rounded-2xl shadow dark:bg-gray-800 dark:border-gray-700">
-                    <div className="m-auto p-auto h-64">
-                      <img
-                        className="p-8 rounded-t-lg w-auto"
-                        src={`http://${BASE}/images/products/${product.images[0]}`}
-                        alt="product image"
-                      />
-                    </div>
-                    <div className="px-5 pb-5">
-                      <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                        {product.title}
-                      </h5>
-                      <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                        {`${getAppxDate(product.createdAt)}`}
-                      </p>
-                      {/* <div className="flex items-center mt-2.5 mb-5">
+        {/* <div className="grid md:grid-cols-3 grid-cols-3 gap-y-10 space-around space-between"> */}
+        {/* <div className=" m-auto grid grid-cols-3 gap-10"> */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-20 p-16">
+          {products?.map((product) => {
+            if (
+              (categorylist.includes(product.category) ||
+                categorylist.length === 0) &&
+              (product.price <= price || price === 100000) &&
+              (getAge(product.age) <= age || age === 240) &&
+              (!search ||
+                product.title.toLowerCase().includes(search) ||
+                product.description.toLowerCase().includes(search) ||
+                product.category.toLowerCase().includes(search))
+            )
+              return (
+                <div key={product._id} className="rounded-lg">
+                  <Link
+                    to="./show-product"
+                    state={{
+                      data: product,
+                      user: user,
+                    }}
+                  >
+                    <div className=" max-w-sm bg-white border border-gray-200 rounded-2xl shadow dark:bg-gray-800 dark:border-gray-700">
+                      <div className="m-auto p-auto h-72">
+                        <img
+                          className="p-8 rounded-t-lg w-auto"
+                          src={`https://${BASE}/images/products/${product.images[0]}`}
+                          alt="product image"
+                        />
+                      </div>
+                      <div className="px-5 pb-5">
+                        <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                          {product.title}
+                        </h5>
+                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                          {`${getAppxDate(product.createdAt)}`}
+                        </p>
+                        {/* <div className="flex items-center mt-2.5 mb-5">
                         <svg
                           className="w-4 h-4 text-yellow-300 mr-1"
                           aria-hidden="true"
@@ -440,24 +441,24 @@ const Home = () => {
                           5.0
                         </span>
                       </div> */}
-                      <div className="flex items-center justify-between">
-                        <span className="text-3xl font-bold text-gray-900 dark:text-white">
-                          ₹ {product.price}
-                        </span>
-                        {/* <a
-                          href="#"
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                        >
-                          Add to cart
-                        </a> */}
+                        <div className="flex items-center justify-between">
+                          <span className="text-3xl font-bold text-gray-900 dark:text-white">
+                            ₹ {product.price}
+                          </span>
+                          {/* <a
+                            href="#"
+                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                          >
+                            Add to cart
+                          </a> */}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              </div>
-            );
-        })}
-      </div>
+                  </Link>
+                </div>
+              );
+          })}
+        </div>
       {onLoad()};
     </>
   );
