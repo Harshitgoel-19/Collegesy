@@ -59,7 +59,7 @@ const ChatList = () => {
                 <i className="fa fa-search absolute right-3 top-4 text-gray-300" />{" "}
               </div>
               <ul>
-                {chats?.map((chat) => (
+                {chats?.reverse().map((chat) => (
                   <Link key={chat._id}
                     to="/chat"
                     state={{

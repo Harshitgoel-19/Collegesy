@@ -64,7 +64,7 @@ const AllChatList = () => {
       <br />
       <br />
       <br />
-      <div className="py-10 h-screen bg-gray-300 px-2">
+      <div className="py-10 h-auto bg-gray-300 px-2">
         <div className="max-w-md mx-auto bg-gray-100 shadow-lg rounded-lg overflow-hidden md:max-w-lg">
           <div className="md:flex">
             <div className="w-full p-4">
@@ -79,7 +79,7 @@ const AllChatList = () => {
               </div>
               <p>Buying...</p>
               <ul>
-                {buyingChats?.map((chat) => (
+                {buyingChats?.reverse().map((chat) => (
                   <Link key={chat._id} to="/chat" state={{ user, chat }}>
                     <SingleChatGrid
                       chat={chat}
@@ -92,7 +92,7 @@ const AllChatList = () => {
 
               <p>Selling...</p>
               <ul>
-                {sellingChats?.map((chat) => (
+                {sellingChats?.reverse().map((chat) => (
                   <Link key={chat._id} to="/chat" state={{ user, chat }}>
                     <SingleChatGrid
                       chat={chat}

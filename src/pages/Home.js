@@ -313,7 +313,7 @@ const Home = () => {
           name="sort"
           id="sort"
           defaultValue="-createdAt"
-          className="bg-white rounded-lg shadow dark:bg-gray-900 text-white mx-2"
+          className="bg-white font-semibold text-black rounded-lg shadow dark:bg-gray-900 text-white mx-2"
           onChange={(e) => {
             sortProducts(e);
           }}
@@ -376,7 +376,7 @@ const Home = () => {
                   }}
                 >
                   <div className=" max-w-sm bg-white border border-gray-200 rounded-2xl shadow dark:bg-gray-800 dark:border-gray-700">
-                    <div className="m-auto p-auto h-72">
+                    <div className="m-auto p-auto h-64">
                       <img
                         className="p-8 rounded-t-lg w-auto"
                         src={`http://${BASE}/images/products/${product.images[0]}`}
@@ -444,12 +444,12 @@ const Home = () => {
                         <span className="text-3xl font-bold text-gray-900 dark:text-white">
                           ₹ {product.price}
                         </span>
-                        <a
+                        {/* <a
                           href="#"
                           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         >
                           Add to cart
-                        </a>
+                        </a> */}
                       </div>
                     </div>
                   </div>
