@@ -380,7 +380,7 @@ const Home = () => {
                       
                     <div className="m-auto p-auto h-72">
                         <img
-                          className="p-8 rounded-t-lg w-auto object-contain"
+                          className="p-8 rounded-t-lg w-full h-72 object-contain"
                           src={`https://${BASE}/images/products/${product.images[0]}`}
                           alt="product image"
                         />
