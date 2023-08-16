@@ -64,7 +64,7 @@ const Chat = () => {
   const loadChat = async () => {
     try {
       const res2 = await axios.get(
-        `${BASE}/api/chats/getChat/` + chat._id
+        `https://${BASE}/api/chats/getChat/` + chat._id
       );
       chat = res2.data.data.chat;
       other = getOther();
@@ -73,7 +73,7 @@ const Chat = () => {
       if (other.lastRecieve != lastRecieveTime)
         setLastRecieveTime(new Date(Date.parse(other.lastRecieve)));
       const res = await axios.get(
-        `${BASE}/api/messages/getMessages/` + chat._id
+        `https://${BASE}/api/messages/getMessages/` + chat._id
       );
       const previous = res.data.data.messages.reverse();
       setMessages(previous);
