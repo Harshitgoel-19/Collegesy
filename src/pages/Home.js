@@ -377,13 +377,7 @@ const Home = () => {
                     }}
                   >
                     <div className=" max-w-sm bg-white border border-gray-200 rounded-2xl shadow dark:bg-gray-800 dark:border-gray-700">
-                      // <div className="m-auto p-auto h-72">
-                      //   <img
-                      //     className="p-8 rounded-t-lg w-auto"
-                      //     src={`https://${BASE}/images/products/${product.images[0]}`}
-                      //     alt="product image"
-                      //   />
-                      // </div>
+                      
                     <div className="relative">
                 <img
                   crossOrigin="anonymous"
