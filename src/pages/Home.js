@@ -310,7 +310,7 @@ const Home = () => {
           name="sort"
           id="sort"
           defaultValue="-createdAt"
-          className="text-black bg-white font-semibold rounded-lg shadow dark:bg-gray-900 text-white mx-2"
+          className="text-black bg-white font-semibold rounded-lg shadow dark:bg-gray-900 dark:text-white mx-2"
           onChange={(e) => {
             sortProducts(e);
           }}
