@@ -1,26 +1,39 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import Navigation from "../components/Navigation";
-import { ToastContainer, toast } from "react-toastify";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-let BASE=process.env.REACT_APP_BACK_END_ROOT
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import Navigation from "../components/Navigation";
+import ClipLoader from "react-spinners/ClipLoader";
+import "react-toastify/dist/ReactToastify.css";
+axios.defaults.withCredentials = true;
+let BASE = process.env.REACT_APP_BACK_END_ROOT;
 
-const UpdatePassword = () => {
+const UpdateProduct = () => {
   const location = useLocation();
-  console.log(location);
   const navigate = useNavigate();
+  let product = location.state.data;
+  let user = location.state.user;
+  //if(!product || !user)navigate('/');
+  const [loading, setloading] = useState(false);
   const [input, setInput] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmNewPassword: "",
+    title: "",
+    description: "",
+    price: "",
+    category: "",
+    age: "",
   });
 
+  const [prevImages, setPrevImages] = useState([]);
+  const [newImages, setNewImages] = useState([]);
   const [messaged, setMessage] = useState({ messaged: "" });
 
+  const getphotos = (e) => {
+    const files = e.target.files;
+    setNewImages((prev) => [...prev, ...files]);
+  };
+
   const getdata = (e) => {
-    // console.log(e.target.value);
     const { value, name } = e.target;
-    // console.log(value,name)
     setInput(() => {
       return {
         ...input,
@@ -29,74 +42,252 @@ const UpdatePassword = () => {
     });
   };
 
-  const addData = async (e) => {
-    e.preventDefault();
-    setMessage({ messaged: "" });
-    const { currentPassword, newPassword, confirmNewPassword } = input;
-    if (currentPassword === "") toast.warning("Please enter Current Password");
-    else if (newPassword === "") toast.warning("Please enter New Password");
-    else if (newPassword === currentPassword)
-      toast.warning("New Password matches with Old Password");
-    else if (newPassword.length < 8) toast.warning("New Password is too short");
-    else if (confirmNewPassword === "")
-      toast.warning("Please confirm New Password");
-    else {
-      const res = await axios.patch(
-        `https://${BASE}/api/users/updatePassword`,
-        {
-          currentPassword,
-          newPassword,
-          confirmNewPassword,
-          //   token: window.location.search
-        }
-      );
+  useEffect(() => {
+    setPrevImages(product.images);
+    setInput({
+      title: product.title,
+      description: product.description,
+      price: product.price,
+      category: product.category,
+      age: product.age,
+    });
+  }, []);
 
-      if (res.status === 200) navigate("/login");
-      else setMessage({ messaged: e.response.data.message });
+  const addData = (e) => {
+    e.preventDefault();
+
+    const formdata = new FormData();
+
+    newImages.forEach((item) => {
+      formdata.append("productImages", item);
+    });
+
+    prevImages.forEach((item) => {
+      formdata.append("prevImages", item);
+    });
+
+    setMessage({ messaged: "" });
+
+    const { title, description, price, category, age } = input;
+    if (title === "") toast.warning("Please enter Title");
+    else if (title.length > 20) toast.warning("Title is too long");
+    else if (description === "") toast.warning("Please enter Description");
+    else if (price === "") toast.warning("Please enter Price");
+    else if (price < 0) toast.warning("Please enter valid Price");
+    else if (price > 1000000)
+      toast.warning("Price range should be between 0-1000000");
+    else if (age === "") toast.warning("Please enter Age of product");
+    else {
+      formdata.append("title", title);
+      formdata.append("description", description);
+      formdata.append("price", price);
+      formdata.append("category", category);
+      formdata.append("age", age);
+      for (var key of formdata.entries()) {
+        console.log(key[0] + ", " + key[1]);
+      }
+      // const { productImages } = files;
+      // console.log(title, description, price);
+      // const id=prodId;
+      // if (title === "") alert("Please enter Title");
+      // else if (description === "") alert("Please enter Description");
+      // else if (price === "") alert("Please enter Price");
+      // else {
+      // console.log(formdata)
+      try {
+        setloading(true);
+        axios
+          .put(
+            `https://${BASE}/api/products/updateProduct/` + product._id,
+            formdata,
+            /*title,
+            description,
+            price,*/
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
+          .then((res) => {
+            if (res.status === 200) {
+              toast.success("Product Updated Successfully");
+              setTimeout(() => {
+                navigate("/");
+              }, 500);
+            }
+          });
+      } catch (e) {
+        setloading(true);
+        console.log(e);
+        setMessage({ messaged: e.response.data.message });
+      }
+      // }
     }
   };
   const print = Object.values(messaged);
+  const optionsArray = [
+    "Books",
+    "Mobiles",
+    "Electronics",
+    "Accessories",
+    "Vehicle",
+    "Health & Fitness",
+    "Furniture",
+    "Calculator",
+    "Stationary",
+    "Others",
+  ];
+  // {
+  //   Array.from(files).map(photo=>{
+  //     return{
+  //       <span>
+  //         <img
+  //           src={photo? URL.createObjectURL(photo): null} />
+  //       </span>
+  //     }
+  //   })
+  // }
+
+  if (!user) {
+    // console.log("hit")
+    return (
+      <>
+        <h1>
+          User not Logged In. Please go to <NavLink to="/login">LogIn</NavLink>{" "}
+        </h1>
+      </>
+    );
+  }
+  const getToday = () => {
+    const today = new Date();
+    return today.toISOString().substr(0, 10);
+  };
   return (
     <>
-      <Navigation user={location.state} />
+      <Navigation user={user} />
       <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-4">
         <div className="p-10 xs:p-0 mx-auto md:w-full md:max-w-md">
           {/* <h1 className="font-bold text-center text-2xl mb-5">Your Logo</h1> */}
           <div className="bg-white shadow w-full rounded-lg divide-y divide-gray-200">
             <div className="px-5 py-7">
-              {/* <label className="font-semibold text-sm text-gray-600 pb-1 block">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                onChange={getdata}
-                className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
-              /> */}
+              <div>
+                {prevImages &&
+                  prevImages.length > 0 &&
+                  prevImages.map((image, index) => {
+                    return (
+                      <div key={image}>
+                        <img
+                          src={`https://${BASE}/images/products/${image}`}
+                          alt={image}
+                          height="50"
+                          width="50"
+                        />
+                        <button
+                          onClick={() => {
+                            setPrevImages((prev) => {
+                              const newPrevImages = prev.filter((img) => {
+                                return img !== image;
+                              });
+                              return newPrevImages;
+                            });
+                          }}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    );
+                  })}
+
+                {newImages &&
+                  newImages.map((image, index) => {
+                    return (
+                      <div key={image}>
+                        <img
+                          src={URL.createObjectURL(image)}
+                          alt={image}
+                          height="50"
+                          width="50"
+                        />
+                        <button
+                          onClick={() => {
+                            setNewImages((prev) => {
+                              const newNewImages = prev.filter((img) => {
+                                return img !== image;
+                              });
+                              return newNewImages;
+                            });
+                          }}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    );
+                  })}
+              </div>
               <label className="font-semibold text-sm text-gray-600 pb-1 block">
-                Old Password
+                Upload Photos
               </label>
               <input
-                type="password"
-                name="currentPassword"
+                type="file"
+                multiple
+                name="productImages"
+                onChange={getphotos}
+                className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                required
+              />
+
+              <label className="font-semibold text-sm text-gray-600 pb-1 block">
+                Title
+              </label>
+              <input
+                type="text"
+                name="title"
+                value={input.title}
                 onChange={getdata}
                 className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
               />
               <label className="font-semibold text-sm text-gray-600 pb-1 block">
-                New Password
+                Description
               </label>
               <input
-                type="password"
-                name="newPassword"
+                type="text"
+                name="description"
+                value={input.description}
                 onChange={getdata}
                 className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
               />
               <label className="font-semibold text-sm text-gray-600 pb-1 block">
-                Confirm New Password
+                Price
               </label>
               <input
-                type="password"
-                name="confirmNewPassword"
+                type="number"
+                name="price"
+                value={input.price}
+                onChange={getdata}
+                className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+              />
+              <label className="font-semibold text-sm text-gray-600 pb-1 block">
+                Category
+              </label>
+              <select
+                name="category"
+                className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                value={input.category} selected
+                onChange={getdata}
+              >
+                {optionsArray.map((val) => {
+                  return <option value={val}>{val}</option>;
+                })}
+              </select>
+              <label className="font-semibold text-sm text-gray-600 pb-1 block">
+                Date of Purchase
+              </label>
+              <input
+                type="date"
+                name="age"
+                value={input.age?.substr(0, 10)}
+                max={getToday()}
                 onChange={getdata}
                 className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
               />
@@ -105,7 +296,7 @@ const UpdatePassword = () => {
                 onClick={addData}
                 className="transition duration-200 bg-blue-500 hover:bg-blue-600 focus:bg-blue-700 focus:shadow-sm focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 text-white w-full py-2.5 rounded-lg text-sm shadow-sm hover:shadow-md font-semibold text-center inline-block"
               >
-                <span className="inline-block mr-2">Reset Password</span>
+                <span className="inline-block mr-2">Update Product</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -120,60 +311,11 @@ const UpdatePassword = () => {
                     d="M17 8l4 4m0 0l-4 4m4-4H3"
                   />
                 </svg>
+                {(loading ? <ClipLoader size={15} color="#ffffff" />:<></>)}
               </button>
               <label className="font-semibold text-sm text-gray-600 py-4 pb-1 block">
                 {print}
               </label>
-              {/* <div className="py-5"> */}
-                <div className="grid grid-cols-2 gap-1">
-                  {/* <div className="text-center sm:text-left whitespace-nowrap">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        navigate("/forgot-password");
-                      }}
-                      className="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        className="w-4 h-4 inline-block align-text-top"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
-                        />
-                      </svg>
-                      <span className="inline-block ml-1">Forgot Password</span>
-                    </button>
-                  </div> */}
-
-                  {/* <div className="text-center sm:text-center  whitespace-nowrap"> */}
-                  {/* <button className="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 ring-inset">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      className="w-4 h-4 inline-block align-text-bottom	"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"
-                      />
-                    </svg> */}
-                  {/* <h3 className=" ml-1">Already have an Account?</h3> */}
-                  {/* <h3 className=" ml-1">LogIn</h3> */}
-                  {/* </button> */}
-                  {/* </div> */}
-                </div>
-              {/* </div> */}
             </div>
           </div>
         </div>
@@ -183,4 +325,4 @@ const UpdatePassword = () => {
   );
 };
 
-export default UpdatePassword;
+export default UpdateProduct;
