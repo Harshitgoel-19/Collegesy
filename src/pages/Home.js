@@ -304,7 +304,7 @@ const Home = () => {
       <br />
       <br />
       <br />
-      <div className="flex fixed z-10 top-24">
+      <div className="flex fixed z-10 top-24 sm:top-36">
         <label htmlFor="sort"></label>
         <select
           name="sort"
@@ -332,7 +332,7 @@ const Home = () => {
             className="text-black bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center mx-2 bg-white rounded-lg shadow dark:bg-gray-900 text-white"
             type="button"
           >
-            <h3 className="text-black dark: text-white">Filter</h3>
+            <h3 className="text-black dark:text-white">Filter</h3>
             <svg
               className="w-[18px] h-[18px] text-gray-800 dark:text-white ml-1 pt-1"
               aria-hidden="true"
