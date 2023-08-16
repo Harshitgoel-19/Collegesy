@@ -146,7 +146,7 @@ const Home = () => {
           <div className="z-10 p-2 w-96 mt-2 bg-white rounded-lg shadow dark:bg-gray-700 absolute">
             <div id="dropdown" className="p-2 flex justify-between">
               <div>
-                <h6 className="mb-3 text-sm font-medium text-gray-900 dark:text-white font-bold">
+                <h6 className="mb-3 text-black text-sm font-medium text-gray-900 dark:text-white font-bold">
                   Category
                 </h6>
                 <ul
