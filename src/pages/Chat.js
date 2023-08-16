@@ -152,7 +152,7 @@ const Chat = () => {
     if (chat._id != chatId) return;
     try {
       const newChat = await axios.get(
-        `${BASE}/api/chats/getChat` + chat._id
+        `https://${BASE}/api/chats/getChat` + chat._id
       );
       navigate("/chat", {
         state: {
@@ -303,7 +303,7 @@ const Chat = () => {
   const changeBlock = async () => {
     try {
       const res = await axios.post(
-        `${BASE}/api/chats/blockChat`,
+        `https://${BASE}/api/chats/blockChat`,
         {
           chatId: chat._id,
         }
@@ -489,7 +489,7 @@ const Chat = () => {
                   </svg>
                 </span> */}
                 <img
-                  src={`${BASE}/images/users/${other.image}`}
+                  src={`https://${BASE}/images/users/${other.image}`}
                   alt=""
                   className="w-10 sm:w-16 h-10 sm:h-16 rounded-full"
                 />
