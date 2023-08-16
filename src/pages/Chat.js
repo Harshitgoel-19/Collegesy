@@ -64,7 +64,7 @@ const Chat = () => {
   const loadChat = async () => {
     try {
       const res2 = await axios.get(
-        `https://${BASE}/api/chats/getChat/` + chat._id
+        `${BASE}/api/chats/getChat/` + chat._id
       );
       chat = res2.data.data.chat;
       other = getOther();
@@ -73,7 +73,7 @@ const Chat = () => {
       if (other.lastRecieve != lastRecieveTime)
         setLastRecieveTime(new Date(Date.parse(other.lastRecieve)));
       const res = await axios.get(
-        `https://${BASE}/api/messages/getMessages/` + chat._id
+        `${BASE}/api/messages/getMessages/` + chat._id
       );
       const previous = res.data.data.messages.reverse();
       setMessages(previous);
@@ -152,7 +152,7 @@ const Chat = () => {
     if (chat._id != chatId) return;
     try {
       const newChat = await axios.get(
-        `https://${BASE}/api/chats/getChat` + chat._id
+        `${BASE}/api/chats/getChat` + chat._id
       );
       navigate("/chat", {
         state: {
@@ -303,7 +303,7 @@ const Chat = () => {
   const changeBlock = async () => {
     try {
       const res = await axios.post(
-        `https://${BASE}/api/chats/blockChat`,
+        `${BASE}/api/chats/blockChat`,
         {
           chatId: chat._id,
         }
@@ -371,7 +371,7 @@ const Chat = () => {
                 }}
                 className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3"
               />
-              <div className="absolute right-0 items-center inset-y-0 hidden sm:flex">
+              <div className="absolute right-0 items-center inset-y-0 sm:flex">
                 {/* <button
                   type="button"
                   className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
@@ -464,9 +464,9 @@ const Chat = () => {
     } else {
       return (
         <>
-          <div className="w-full h-12 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3">
+          <div className="w-full h-16 focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3">
             <div className="w-full text-center">
-              <h2 className="">
+              <h2 className="text-base">
                 This Chat has been Blocked. You can't message any more
               </h2>
             </div>
@@ -489,7 +489,7 @@ const Chat = () => {
                   </svg>
                 </span> */}
                 <img
-                  src={`https://${BASE}/images/users/${other.image}`}
+                  src={`${BASE}/images/users/${other.image}`}
                   alt=""
                   className="w-10 sm:w-16 h-10 sm:h-16 rounded-full"
                 />

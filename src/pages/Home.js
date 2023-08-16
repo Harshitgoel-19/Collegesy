@@ -355,7 +355,7 @@ const Home = () => {
       <br />
         {/* <div className="grid md:grid-cols-3 grid-cols-3 gap-y-10 space-around space-between"> */}
         {/* <div className=" m-auto grid grid-cols-3 gap-10"> */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-20 p-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-20 p-16">
           {products?.map((product) => {
             if (
               (categorylist.includes(product.category) ||
@@ -386,7 +386,7 @@ const Home = () => {
                       </div>
                       <div className="px-5 pb-5">
                         <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                        {product.title.length>25? product.title.substr(0,20)+"....":product.title}
+                          {product.title.length>25? product.title.substr(0,20)+"....":product.title}
                         </h5>
                         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                           {`${getAppxDate(product.createdAt)}`}
