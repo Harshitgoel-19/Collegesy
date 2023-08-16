@@ -378,19 +378,13 @@ const Home = () => {
                   >
                     <div className=" max-w-sm bg-white border border-gray-200 rounded-2xl shadow dark:bg-gray-800 dark:border-gray-700">
                       
-                    <div className="relative">
-                <img
-                  crossOrigin="anonymous"
-                  src={
-                    { photo }
-                      ? `https://${BASE}/images/products/${product.images[0]}`
-                      : ""
-                  }
-                  className="w-full h-96 border-4 rounded-lg relative z-10"
-                  alt="productImage"
-                />
-                <div className="border-4 border-yellow-200 absolute top-10 bottom-10 left-10 right-10 z-0" />
-              </div>
+                    <div className="m-auto p-auto h-72">
+                        <img
+                          className="p-8 rounded-t-lg w-auto"
+                          src={`https://${BASE}/images/products/${product.images[0]}`}
+                          alt="product image"
+                        />
+                      </div>
                       <div className="px-5 pb-5">
                         <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                           {product.title.length>25? product.title.substr(0,20)+"....":product.title}
